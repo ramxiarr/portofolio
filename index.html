@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Angkasa | Pengembang Antariksa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Mono&display=swap');
+        
+        :root {
+            --primary: #6c33ff;
+            --secondary: #ff4d8d;
+        }
+        
+        body {
+            font-family: 'Space Mono', monospace;
+            background: #0a0a1a;
+            color: #e0e0ff;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .hero {
+            background: radial-gradient(circle at center, #1a0533 0%, #0a0a1a 70%);
+        }
+        
+        .planet-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(108, 51, 255, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .planet-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(108, 51, 255, 0.6);
+        }
+        
+        .planet-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 51, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            animation: shine 6s infinite linear;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-10%, -10%); }
+            100% { transform: rotate(30deg) translate(10%, 10%); }
+        }
+        
+        .skill-star {
+            position: relative;
+            width: 10px;
+            height: 10px;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 3s infinite alternate, pulse 5s infinite;
+            transform-origin: center;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.4); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .astro-avatar {
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px rgba(108, 51, 255, 0.3),
+                        0 0 30px rgba(108, 51, 255, 0.6);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .meteor {
+            position: absolute;
+            width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(108, 51, 255, 0), var(--primary), rgba(108, 51, 255, 0));
+            transform: rotate(-45deg);
+            opacity: 0;
+            filter: drop-shadow(0 0 10px var(--primary));
+            animation: meteor 8s linear infinite;
+        }
+        
+        @keyframes meteor {
+            0% { top: -50px; right: -50px; opacity: 1; }
+            70% { opacity: 1; }
+            100% { top: 100vh; right: 100vw; opacity: 0; }
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Background elements -->
+    <div class="fixed inset-0 overflow-hidden -z-10">
+        <div class="absolute w-full h-full overflow-hidden">
+            <div class="meteor" style="animation-delay: 0s; right: 20%; top: 10%;"></div>
+            <div class="meteor" style="animation-delay: 3s; right: 40%; top: 5%;"></div>
+            <div class="meteor" style="animation-delay: 6s; right: 70%; top: 15%;"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 backdrop-blur-md bg-black/30">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold gradient-text">R4MA</a>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-white hover:text-purple-300">Home</a>
+                    <a href="#about" class="nav-link text-white hover:text-purple-300">About</a>
+                    <a href="#portfolio" class="nav-link text-white hover:text-purple-300">Portfolio</a>
+                    <a href="#skills" class="nav-link text-white hover:text-purple-300">Skills</a>
+                    <a href="#contact" class="nav-link text-white hover:text-purple-300">Contact</a>
+                </div>
+                
+                <button class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4"><span class="gradient-text">ABDURRAHMAN NUR MAHFUDIN</span></h1>
+                <p class="text-lg md:text-xl mb-8 text-gray-300">Front End Developer & Web Enthusiast.</p>
+                <div class="flex space-x-4">
+                    <a href="#contact" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full text-white hover:opacity-90 transition">Hubungi Saya</a>
+                    <a href="#portfolio" class="px-8 py-3 border border-purple-500 text-purple-300 rounded-full hover:bg-purple-900/30 transition">Lihat Karya</a>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 relative">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a3f2d33e-7c6a-412b-ad2a-8602bc89d2ad.png" alt="Digital galaxy with stars and nebula in purple and blue colors" class="w-full max-w-lg mx-auto rounded-full border-4 border-purple-500/30 p-2">
+                <div class="absolute -bottom-10 -right-10 w-32 h-32 rounded-full bg-purple-500/10 blur-xl"></div>
+                <div class="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-pink-500/10 blur-xl"></div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-white text-4xl">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gradient-to-b from-black/50 to-transparent">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-10 md:mb-0 flex justify-center">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7643ab8f-3332-42fe-8ef8-39bd032eb467.png" alt="Astronaut floating in space with purple glowing visor looking at camera" class="astro-avatar w-64 h-64 object-cover">
+                </div>
+                
+                <div class="md:w-2/3 md:pl-16">
+                    <h3 class="text-2xl font-bold mb-4">Pengembang</h3>
+                    <p class="text-gray-300 mb-6">Saya siswa dari SMKN 1 Surabaya dan siswa dari jurusan Rekaya Perangkat Lunak (RPL). Saat ini saya sedang belajar mendalami website developer dan progamer. Dengan pengembangan web progamer yang senantiasa berusaha untuk terus belajar, 
+                    beradaptasi, dan mengembangkan diri, khususnya dalam bidang progamer, keamanan siber, serta eksplorasi pengembangan Kecerdasan dan teknologi inovatif lainnya.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+                            <div class="text-purple-400 text-2xl mb-2"><i class="fas fa-rocket"></i></div>
+                            <h4 class="font-bold mb-2">Filosofi</h4>
+                            <p class="text-gray-400">Kegagalan adalah kesempatan untuk belajar dan meninngkatkan diri dan Mental yang kuat adalah kunci untuk mencapai kesuksesan.</p>
+                        </div>
+                        
+                        <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+                            <div class="text-pink-400 text-2xl mb-2"><i class="fas fa-star"></i></div>
+                            <h4 class="font-bold mb-2">Misi</h4>
+                            <p class="text-gray-400">Menjadi progamer yang tidak takut gagal, tetapi menggunakan kegagalan sebagai kesempatan untuk belajar dan meningkatkan keterampilan dan Menjadi progamer yang memiliki mental yang kuat, tidak mudah menyerah,
+                                 dan selalu siap untuk menghadapi tantangan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gradient-to-t from-black/50 to-transparent">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4"><span class="gradient-text">Portfolio</span> Projects</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Project 1 -->
+                <div class="planet-card aspect-square flex items-center justify-center bg-gradient-to-br from-purple-900/50 to-indigo-900/50">
+                    <div class="text-center p-8">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5579ef03-054f-437b-9227-f31a2fb99d2b.png" alt="3D rendered planet with glowing rings in purple and blue hues" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+                        <h3 class="text-xl font-bold mb-2">Galaxy Dashboard</h3>
+                        <p class="text-gray-300 mb-4">Panel admin futuristik dengan visualisasi data interaktif.</p>
+                        <a href="#" class="text-purple-300 hover:text-white">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="planet-card aspect-square flex items-center justify-center bg-gradient-to-br from-indigo-900/50 to-blue-900/50">
+                    <div class="text-center p-8">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e025572c-c4ce-4648-9f68-14c9bf6f8205.png" alt="Digital planet surface with glowing data streams and network nodes" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+                        <h3 class="text-xl font-bold mb-2">Cosmos CMS</h3>
+                        <p class="text-gray-300 mb-4">Sistem manajemen konten modular untuk eksplorasi konten tanpa batas.</p>
+                        <a href="#" class="text-blue-300 hover:text-white">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="planet-card aspect-square flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-pink-900/50">
+                    <div class="text-center p-8">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9c5108ce-4e06-45a6-b797-330d6e0dd06d.png" alt="Space station orbiting a glowing gas giant planet with visible rings" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+                        <h3 class="text-xl font-bold mb-2">Nebula AI</h3>
+                        <p class="text-gray-300 mb-4">Platform kecerdasan buatan untuk analisis data berbasis awan.</p>
+                        <a href="#" class="text-pink-300 hover:text-white">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="#" class="inline-block px-8 py-3 border border-purple-500 text-purple-300 rounded-full hover:bg-purple-900/30 transition">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gradient-to-b from-black/50 to-transparent relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full -z-10">
+            <div class="absolute top-1/4 left-1/4 w-2 h-2 skill-star" style="animation-delay: 0s;"></div>
+            <div class="absolute top-1/3 left-2/3 w-3 h-3 skill-star" style="animation-delay: 0.5s;"></div>
+            <div class="absolute top-2/3 left-1/5 w-1 h-1 skill-star" style="animation-delay: 1s;"></div>
+            <div class="absolute top-3/4 left-3/4 w-2 h-2 skill-star" style="animation-delay: 1.5s;"></div>
+            <div class="absolute top-1/5 left-3/5 w-3 h-3 skill-star" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Keterampilan <span class="gradient-text">Teknologi</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Skill 1 -->
+                <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 hover:border-purple-500 transition group">
+                    <div class="text-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3cdba29c-42f9-4180-ad8a-fb7398a71310.png" alt="HTML5 logo with glowing effect surrounded by orbiting electrons" class="w-16 h-16 mx-auto mb-4 grayscale group-hover:grayscale-0 transition">
+                        <h3 class="font-bold mb-2">HTML5</h3>
+                        <div class="w-full bg-gray-800 h-2 rounded-full">
+                            <div class="bg-gradient-to-r from-purple-400 to-purple-700 h-2 rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skill 2 -->
+                <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 hover:border-pink-500 transition group">
+                    <div class="text-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9f54d79a-8222-478d-900d-c0e4595e6393.png" alt="CSS3 logo with nebula-like background and shimmering effect" class="w-16 h-16 mx-auto mb-4 grayscale group-hover:grayscale-0 transition">
+                        <h3 class="font-bold mb-2">CSS3</h3>
+                        <div class="w-full bg-gray-800 h-2 rounded-full">
+                            <div class="bg-gradient-to-r from-pink-400 to-pink-700 h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skill 3 -->
+                <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 hover:border-blue-500 transition group">
+                    <div class="text-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/46357c4f-521d-4c6d-afa9-aa044537017f.png" alt="JavaScript logo with electric blue lightning effects" class="w-16 h-16 mx-auto mb-4 grayscale group-hover:grayscale-0 transition">
+                        <h3 class="font-bold mb-2">JavaScript</h3>
+                        <div class="w-full bg-gray-800 h-2 rounded-full">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-700 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skill 4 -->
+                <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 hover:border-indigo-500 transition group">
+                    <div class="text-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e8c3a582-d6b4-4b15-9b52-5823b13e5b14.png" alt="React logo with atomic orbital rings and glowing connections" class="w-16 h-16 mx-auto mb-4 grayscale group-hover:grayscale-0 transition">
+                        <h3 class="font-bold mb-2">React</h3>
+                        <div class="w-full bg-gray-800 h-2 rounded-full">
+                            <div class="bg-gradient-to-r from-indigo-400 to-indigo-700 h-2 rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-t from-black/50 to-transparent relative overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute top-20 right-20 w-40 h-40 rounded-full bg-purple-500/10 blur-3xl"></div>
+            <div class="absolute bottom-20 left-20 w-64 h-64 rounded-full bg-pink-500/10 blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Kirim <span class="gradient-text">Pesan</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
+            </div>
+            
+            <div class="max-w-2xl mx-auto">
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Nama Anda</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white" placeholder="Masukkan nama Anda">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Anda</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white" placeholder="Masukkan email Anda">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subjek</label>
+                        <input type="text" id="subject" class="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white" placeholder="Apa yang ingin Anda diskusikan?">
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Pesan Anda</label>
+                        <textarea id="message" rows="5" class="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white" placeholder="Tulis pesan Anda..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 rounded-lg text-white font-medium hover:opacity-90 transition">
+                            Kirim Pesan <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-black/50 border-t border-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold gradient-text">PORTFOLIO</a>
+                    <p class="text-gray-400 mt-2">Membawa solusi digital ke orbit yang baru.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-purple-300 text-xl"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-blue-300 text-xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-pink-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-blue-400 text-xl"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-900 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 Portfolio Angkasa. Semua hak dilindungi.</p>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-purple-300 text-sm">Kebijakan Privasi</a>
+                    <a href="#" class="text-gray-500 hover:text-purple-300 text-sm">Syarat & Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('button.md\\:hidden');
+        const navLinks = document.querySelector('.hidden.md\\:flex');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+        });
+        
+        // Add animation to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeInUp');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Add animation class
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .animate-fadeInUp {
+                animation: fadeInUp 1s ease forwards;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+```
